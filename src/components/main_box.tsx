@@ -11,8 +11,8 @@ const MainBox = () => {
     const conicColors = { '10': '#87d068', '20': '#ffe58f', '40': '#ffccc7' };
 
     const [currentTime, setCurrentTime] = useState(new Date());
-    const [lamp_checker, setLampChecker] = useState(0);
-    const [fan_checker, setFanChecker] = useState(0);
+    const [lamp_checker, setLampChecker] = useState(false);
+    const [fan_checker, setFanChecker] = useState(false);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
