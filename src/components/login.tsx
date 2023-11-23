@@ -2,7 +2,6 @@
 import loginBackground from "@/assets/images/login-background.png";
 
 const Login = () => {
-    //Fix commit message
     return (
         <div className="h-[900px] bg-cover bg-[url('../assets/images/login-background.png')] bg-center pt-[300px] pl-[162px]">
             <div className="w-[414px] h-[430px] relative bg-neutral-200 bg-opacity-70 rounded-2xl font-ponnala text-black text-[20px] font-[400] leading-normal">

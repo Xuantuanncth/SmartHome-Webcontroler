@@ -1,7 +1,6 @@
 "use client";
 
 const Sidebar = () => {
-    //Fix commit message
     return (
         <div className="w-[360px] h-[840px] rounded-[20px] bg-[#FFFFFF] opacity-75 relative p-[30px] 
                         text-center text-white font-normal font-['Ponnala'] text-[35px] ml-[50px] mr-[30px]

@@ -9,7 +9,6 @@ import { Switch } from 'antd';
 const MainBox = () => {
 
     const conicColors = { '10': '#87d068', '20': '#ffe58f', '40': '#ffccc7' };
-    //Fix commit message
 
     const [currentTime, setCurrentTime] = useState(new Date());
     const [lamp_checker, setLampChecker] = useState(0);
