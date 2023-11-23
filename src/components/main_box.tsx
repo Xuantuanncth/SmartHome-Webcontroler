@@ -49,10 +49,10 @@ const MainBox = () => {
                         <img src={Lamp_icon.src} alt="This is icon" />
                         <h3 className='pt-[10px] pl-[25px]'>Lamp</h3>
                     </div>
-                    <div class="w-[120px] h-[50px] ml-[57px] mt-[40px] relative">
-                        <button class="w-[120px] h-[50px] left-0 top-0 absolute bg-zinc-100 rounded-[20px]" onClick={() => setLampChecker(!lamp_checker)}></button>
+                    <div className="w-[120px] h-[50px] ml-[57px] mt-[40px] relative">
+                        <button className="w-[120px] h-[50px] left-0 top-0 absolute bg-zinc-100 rounded-[20px]" onClick={() => setLampChecker(!lamp_checker)}></button>
                         {/* <div class="w-[46px] h-[46px] left-[65px] top-[2px] absolute bg-cyan-600 rounded-full"></div> */}
-                        <div class={`${ lamp_checker ? 'left-[65px]' : 'left-[5px]'} w-[46px] h-[46px]  top-[2px] absolute bg-cyan-600 rounded-full`}></div>
+                        <div className={`${ lamp_checker ? 'left-[65px]' : 'left-[5px]'} w-[46px] h-[46px]  top-[2px] absolute bg-cyan-600 rounded-full`}></div>
                     </div>
                 </div>
                 <div className="w-[234px] h-[209px] bg-indigo-600 rounded-xl mt-[90px] ml-[64px] text-black text-3xl font-normal font-['Pontano Sans']">
@@ -60,10 +60,10 @@ const MainBox = () => {
                         <img src={Fan_icon.src} alt="This is icon" />
                         <h3 className='pt-[10px] pl-[25px]'>Fan</h3>
                     </div>
-                    <div class="w-[120px] h-[50px] ml-[57px] mt-[47px] relative">
-                        <button class="w-[120px] h-[50px] left-0 top-0 absolute bg-zinc-100 rounded-[20px]" onClick={()=>setFanChecker(!fan_checker)}></button>
+                    <div className="w-[120px] h-[50px] ml-[57px] mt-[47px] relative">
+                        <button className="w-[120px] h-[50px] left-0 top-0 absolute bg-zinc-100 rounded-[20px]" onClick={()=>setFanChecker(!fan_checker)}></button>
                         {/* <div class="w-[46px] h-[46px] left-[65px] top-[2px] absolute bg-cyan-600 rounded-full"></div> */}
-                        <div class={`${ fan_checker ? 'left-[65px]' : 'left-[5px]'} w-[46px] h-[46px]  top-[2px] absolute bg-cyan-600 rounded-full`}></div>
+                        <div className={`${ fan_checker ? 'left-[65px]' : 'left-[5px]'} w-[46px] h-[46px]  top-[2px] absolute bg-cyan-600 rounded-full`}></div>
                     </div>
                 </div>
             </div>
