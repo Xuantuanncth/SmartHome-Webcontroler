@@ -3,8 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Progress, Space } from 'antd';
 import Lamp_icon from '@/assets/images/lamp.png';
 import Fan_icon from '@/assets/images/fan.png';
-import SwitchButton from './switch';
-import { Switch } from 'antd';
+import Image from 'next/image';
 
 const MainBox = () => {
 
@@ -46,7 +45,7 @@ const MainBox = () => {
                 </div>
                 <div className="w-[234px] h-[209px] bg-yellow-400 rounded-xl mt-[90px] ml-[64px] text-black text-3xl font-normal font-['Pontano Sans'] ">
                     <div className='flex text-center mt-[15px]'>
-                        <img src={Lamp_icon.src} alt="This is icon" />
+                        <Image src={Lamp_icon.src} alt="This is icon" />
                         <h3 className='pt-[10px] pl-[25px]'>Lamp</h3>
                     </div>
                     <div className="w-[120px] h-[50px] ml-[57px] mt-[40px] relative">
@@ -57,7 +56,7 @@ const MainBox = () => {
                 </div>
                 <div className="w-[234px] h-[209px] bg-indigo-600 rounded-xl mt-[90px] ml-[64px] text-black text-3xl font-normal font-['Pontano Sans']">
                     <div className='flex text-center mt-[15px] ml-[10px]'>
-                        <img src={Fan_icon.src} alt="This is icon" />
+                        <Image src={Fan_icon.src} alt="This is icon" />
                         <h3 className='pt-[10px] pl-[25px]'>Fan</h3>
                     </div>
                     <div className="w-[120px] h-[50px] ml-[57px] mt-[47px] relative">
