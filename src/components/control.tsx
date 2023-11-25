@@ -6,7 +6,7 @@ import { SetStateAction, useState } from "react";
 
 const Control = () =>{
     const [indexState, setIndexState] = useState(0);
-    const  handleStateChange = (thisIndex) =>{
+    const  handleStateChange = ({thisIndex}:{thisIndex:any}) =>{
         console.log("handleStateChange: ",thisIndex );
         setIndexState(thisIndex);
     }

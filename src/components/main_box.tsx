@@ -5,7 +5,7 @@ import Lamp_icon from '@/assets/images/lamp.png';
 import Fan_icon from '@/assets/images/fan.png';
 import Image from 'next/image';
 
-const MainBox = ({ current_index }) => {
+const MainBox = ({ current_index }:{current_index:any}) => {
 
     const conicColors = { '10': '#87d068', '20': '#ffe58f', '40': '#ffccc7' };
 
