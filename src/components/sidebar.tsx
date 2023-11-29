@@ -5,16 +5,15 @@ import { useState } from "react";
 const Sidebar = ({onStatus}:{onStatus:any}) => {
     const[current_index, setIndexState] = useState(0);
     const updateIndex = ({data}:{data:any}) => {
-        console.log("index: " + data);
-        onStatus(data);
+        console.log("index: ", data);
+        onStatus({thisIndex:data});
         setIndexState(data);
     }
 
-    function BarItem({ index, title, isChoose }:{index:any, title:any, isChoose:any}) {
+    function BarItem({index, title, isChoose }:{index:any, title:any, isChoose:any}) {
         return (
-
-                <button className={`${isChoose ? 'bg-teal-700' : 'bg-indigo-600'} w-[300px] h-[150px] rounded-[12px] mb-[30px] hover:bg-blue-700`}  
-                onClick={() => { updateIndex(index) }}
+                <button className={`${isChoose ? 'bg-teal-700' : 'bg-indigo-600'} w-[300px] h-[150px] rounded-[12px] mb-[30px] hover:bg-blue-700`}
+                    onClick={() => updateIndex({data:index})}
                 >
                     {title}
                 </button>
