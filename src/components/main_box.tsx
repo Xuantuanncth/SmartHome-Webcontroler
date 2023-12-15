@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Progress, Space } from 'antd';
+import { push, ref, get, onValue } from 'firebase/database';
+import { database } from './firebase';
 import Lamp_icon from '@/assets/images/lamp.png';
 import Fan_icon from '@/assets/images/fan.png';
 import Image from 'next/image';
@@ -9,68 +11,95 @@ const MainBox = ({ current_index }: { current_index: any }) => {
 
     const conicColors = { '10': '#87d068', '20': '#ffe58f', '40': '#ffccc7' };
     const authKey = "G48J18orU7owhtf8y3iWgVMkChTVKGoISmybPr50";
-    const firebaseApiUrl = "https://smarthomev1-a1624-default-rtdb.firebaseio.com/.json";
+    const firebaseApiUrl = "https://smarthomev1-a1624-default-rtdb.firebaseio.com/.json"+"?auth="+authKey;
     const livingRoom_data = { temperature: 0, humidity: 0, lamp_status: 0, fan_status: 0 };
     const bedRoom_data = { temperature: 0, humidity: 0, lamp_status: 0, fan_status: 0 };
     const kitchen_data = { gas: 0, lamp_status: 0, fan_status: 0 };
     const [livingRoom, updateLivingRoom] = useState(livingRoom_data);
     const [bedRoom, updateBedRoom] = useState(bedRoom_data);
     const [kitChen, updateKitchen] = useState(kitchen_data);
+    const [initialValue, updateInitialValue] = useState({living_sts:false, kitchen_sts:false,bedroom_sts:false});
 
 
     const getDataFromFirebase = async () => {
-        try {
-            const response = await fetch(firebaseApiUrl).then((response) => response.json());
-            // console.log("Data: ",response);
-            updateLivingRoom({ temperature: response.livingroom.temperature, humidity: response.livingroom.humidity, lamp_status: response.livingroom.lamp, fan_status: response.livingroom.fan });
-            updateBedRoom({ temperature: response.bedroom.temperature, humidity: response.bedroom.humidity, lamp_status: response.bedroom.lamp, fan_status: response.bedroom.fan });
-            updateKitchen({ gas: response.Kitchen.Gas, lamp_status: response.Kitchen.lamp, fan_status: response.Kitchen.fan });
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+        // try {
+        //     const response = await fetch(firebaseApiUrl).then((response) => response.json());
+        //     // console.log("Data: ",response);
+        //     updateLivingRoom({ temperature: response.livingroom.temperature, humidity: response.livingroom.humidity, lamp_status: response.livingroom.lamp, fan_status: response.livingroom.fan });
+        //     updateBedRoom({ temperature: response.bedroom.temperature, humidity: response.bedroom.humidity, lamp_status: response.bedroom.lamp, fan_status: response.bedroom.fan });
+        //     updateKitchen({ gas: response.Kitchen.Gas, lamp_status: response.Kitchen.lamp, fan_status: response.Kitchen.fan });
+        // } catch (error) {
+        //     console.error("Error fetching data:", error);
+        // }
+        // updateInitialValue({living_sts:true, kitchen_sts:true, bedroom_sts:true});
     }
 
-    const getIntervalData = async () => {
-        try {
-            const response = await fetch(firebaseApiUrl).then((response) => response.json());
-            compareData(response);
-            // console.log("Data: ",response);
-            // updateLivingRoom({ temperature: response.livingroom.temperature, humidity: response.livingroom.humidity, lamp_status: response.livingroom.lamp, fan_status: response.livingroom.fan });
-            // updateBedRoom({ temperature: response.bedroom.temperature, humidity: response.bedroom.humidity, lamp_status: response.bedroom.lamp, fan_status: response.bedroom.fan });
-            // updateKitchen({ gas: response.Kitchen.Gas, lamp_status: response.Kitchen.lamp, fan_status: response.Kitchen.fan });
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+    // const getIntervalData = async () => {
+    //     try {
+    //         const response = await fetch(firebaseApiUrl).then((response) => response.json());
+    //         compareData(response);
+    //         // console.log("Data: ",response);
+    //         // updateLivingRoom({ temperature: response.livingroom.temperature, humidity: response.livingroom.humidity, lamp_status: response.livingroom.lamp, fan_status: response.livingroom.fan });
+    //         // updateBedRoom({ temperature: response.bedroom.temperature, humidity: response.bedroom.humidity, lamp_status: response.bedroom.lamp, fan_status: response.bedroom.fan });
+    //         // updateKitchen({ gas: response.Kitchen.Gas, lamp_status: response.Kitchen.lamp, fan_status: response.Kitchen.fan });
+    //     } catch (error) {
+    //         console.error("Error fetching data:", error);
+    //     }
+    // };
 
     // 
-    const compareData = ( data:any) => {
-        //Compare living
-        // console.log("Data: ",data);
-        if(livingRoom.temperature != data.livingroom.temperature){
-            updateLivingRoom(prev => ({ ...prev, temperature: data.livingroom.temperature }));
-        } else if(livingRoom.humidity != data.livingroom.humidity){
-            updateLivingRoom(prev => ({ ...prev, humidity:data.livingroom.humidity}))
-        } else if (livingRoom.fan_status != data.livingroom.fan){
-            updateLivingRoom(prev => ({ ...prev, fan_status:data.livingroom.fan}))
-        } else if (livingRoom.lamp_status != data.livingroom.lamp){
-            updateLivingRoom(prev => ({ ...prev, lamp_status:data.livingroom.lamp}))
-        } else if (bedRoom.temperature != data.bedroom.temperature){
-            updateLivingRoom(prev => ({ ...prev, temperature: data.bedroom.temperature }))
-        } else if (bedRoom.humidity != data.bedroom.humidity){
-            updateLivingRoom(prev => ({ ...prev, humidity:data.bedroom.humidity}))
-        } else if (bedRoom.fan_status != data.bedroom.fan){
-            updateLivingRoom(prev => ({ ...prev, fan_status:data.bedroom.fan}))
-        } else if (bedRoom.lamp_status != data.bedroom.lamp){
-            updateLivingRoom(prev => ({ ...prev, lamp_status:data.bedroom.lamp}))
-        } else if (kitChen.fan_status != data.Kitchen.fan){
-            updateLivingRoom(prev => ({ ...prev, fan_status:data.Kitchen.fan}))
-        } else if (kitChen.lamp_status != data.Kitchen.lamp){
-            updateLivingRoom(prev => ({ ...prev, lamp_status:data.Kitchen.lamp}))
-        }
-    }
+    // const compareData = ( data:any) => {
+    //     //Compare living
+    //     // console.log("Data: ",data);
+    //     if(livingRoom.temperature != data.livingroom.temperature){
+    //         updateLivingRoom(prev => ({ ...prev, temperature: data.livingroom.temperature }));
+    //     } else if(livingRoom.humidity != data.livingroom.humidity){
+    //         updateLivingRoom(prev => ({ ...prev, humidity:data.livingroom.humidity}))
+    //     } else if (livingRoom.fan_status != data.livingroom.fan){
+    //         updateLivingRoom(prev => ({ ...prev, fan_status:data.livingroom.fan}))
+    //     } else if (livingRoom.lamp_status != data.livingroom.lamp){
+    //         updateLivingRoom(prev => ({ ...prev, lamp_status:data.livingroom.lamp}))
+    //     } else if (bedRoom.temperature != data.bedroom.temperature){
+    //         updateLivingRoom(prev => ({ ...prev, temperature: data.bedroom.temperature }))
+    //     } else if (bedRoom.humidity != data.bedroom.humidity){
+    //         updateLivingRoom(prev => ({ ...prev, humidity:data.bedroom.humidity}))
+    //     } else if (bedRoom.fan_status != data.bedroom.fan){
+    //         updateLivingRoom(prev => ({ ...prev, fan_status:data.bedroom.fan}))
+    //     } else if (bedRoom.lamp_status != data.bedroom.lamp){
+    //         updateLivingRoom(prev => ({ ...prev, lamp_status:data.bedroom.lamp}))
+    //     } else if (kitChen.fan_status != data.Kitchen.fan){
+    //         updateLivingRoom(prev => ({ ...prev, fan_status:data.Kitchen.fan}))
+    //     } else if (kitChen.lamp_status != data.Kitchen.lamp){
+    //         updateLivingRoom(prev => ({ ...prev, lamp_status:data.Kitchen.lamp}))
+    //     }
+    // }
 
-    const fetchDataInterval = setInterval(getIntervalData, 15000);
+
+    // const kitchen_sts = ref(database, '/Kitchen/fan');
+    // onValue(kitchen_sts, (snapshot) =>{
+    //     const data = snapshot.val();
+    //     // if(initialValue.kitchen_sts){
+    //         console.log("On kitchen_sts: ", data);
+    //         updateKitchen(prev => ({ ...prev, fan_status:data.fan}));
+    //     // }
+    // })
+    // const livingroom_sts = ref(database, '/livingroom');
+    // onValue(livingroom_sts, (snapshot) =>{
+    //     const data = snapshot.val();
+    //     if(initialValue.living_sts){
+    //         console.log("On livingroom_sts: ", data);
+    //         updateLivingRoom({ temperature: data.temperature, humidity: data.humidity, lamp_status: data.lamp, fan_status: data.fan });
+    //     }
+    // })
+    // const bedroom_sts = ref(database, '/bedroom');
+    // onValue(bedroom_sts, (snapshot) =>{
+    //     const data = snapshot.val();
+    //     if(initialValue.bedroom_sts){
+    //         console.log("On bedroom_sts: ", data);
+    //         updateBedRoom({ temperature: data.temperature, humidity: data.humidity, lamp_status: data.lamp, fan_status: data.fan });
+    //     }
+    // })
+    // // const fetchDataInterval = setInterval(getIntervalData, 15000);
 
     const sendDataToFirebase = (passApi: string, data: number) => {
         fetch(passApi, {
@@ -93,17 +122,38 @@ const MainBox = ({ current_index }: { current_index: any }) => {
 
 
 
+    // useEffect(() => {
+    //     getDataFromFirebase();
+    // }, []);
+
     useEffect(() => {
-        getDataFromFirebase();
-    }, []);
+        const kitchen_sts = ref(database, '/Kitchen');
+        onValue(kitchen_sts, (snapshot) => {
+          const data = snapshot.val();
+          console.log("On kitchen_sts: ", data);
+          updateKitchen({ gas: data.Gas, lamp_status: data.lamp, fan_status: data.fan });
+        });
+        const livingroom_sts = ref(database, '/livingroom');
+        onValue(livingroom_sts, (snapshot) =>{
+            const data = snapshot.val();
+            console.log("On livingroom_sts: ", data);
+            updateLivingRoom({ temperature: data.temperature, humidity: data.humidity, lamp_status: data.lamp, fan_status: data.fan });
+        });
+        const bedroom_sts = ref(database, '/bedroom');
+        onValue(bedroom_sts, (snapshot) =>{
+            const data = snapshot.val();
+            console.log("On bedroom_sts: ", data);
+            updateBedRoom({ temperature: data.temperature, humidity: data.humidity, lamp_status: data.lamp, fan_status: data.fan });
+        })
+      }, []);
 
     const getApiName = (index: number, device: string) => {
         const apiName = "https://smarthomev1-a1624-default-rtdb.firebaseio.com/"
         const roomName = ["livingroom", "bedroom", "Kitchen"];
         if (device === "lamp") {
-            return apiName + roomName[index] + "/lamp.json";
+            return apiName + roomName[index] + "/lamp.json"+"?auth="+authKey;
         } else {
-            return apiName + roomName[index] + "/fan.json";
+            return apiName + roomName[index] + "/fan.json"+"?auth="+authKey;
         }
     }
 
@@ -166,14 +216,13 @@ const MainBox = ({ current_index }: { current_index: any }) => {
                 <div className="w-[357px] h-[481px] bg-indigo-50 rounded-xl text-black text-3xl font-normal font-['Pontano Sans'] text-center" >
 
                     {current_index === 2 ? (
-                        <p className="pt-[53px]">Gas percent: {kitChen.gas}%</p>
+                        <p></p>
                     ) : (
                         <>
                             <Space wrap className='pt-[40px]'>
                                 <Progress type="dashboard" percent={current_index === 1 ? bedRoom.temperature : livingRoom.temperature} format={(percent) => `${percent} ℃`} strokeColor={conicColors} size={250} />
                             </Space>
                             <p className="pt-[53px]">Humidity: {current_index === 1 ? bedRoom.humidity : livingRoom.humidity}%</p>
-                            <p className='pt-[10px]'>Temperature Normal</p>
                         </>
                     )}
                 </div>
